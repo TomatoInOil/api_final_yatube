@@ -5,6 +5,19 @@ from django.conf import settings
 User = get_user_model()
 
 
+class Group(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    slug = models.SlugField(unique=True)
+    description = models.TextField(verbose_name="Описание")
+
+    class Meta:
+        verbose_name = "Сообщество"
+        verbose_name_plural = "Сообщества"
+
+    def __str__(self):
+        return self.title
+
+
 class Post(models.Model):
     """Модель постов."""
 
@@ -18,6 +31,14 @@ class Post(models.Model):
     )
     image = models.ImageField(
         upload_to="posts/", null=True, blank=True, verbose_name="Картинка"
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.CASCADE,
+        related_name="posts",
+        blank=True,
+        null=True,
+        verbose_name="Сообщество",
     )
 
     class Meta:
@@ -77,4 +98,4 @@ class Follow(models.Model):
         verbose_name_plural = "Подписки"
 
     def __str__(self):
-        return f'{self.user} subscribed> {self.following}'
+        return f"{self.user} subscribed> {self.following}"
