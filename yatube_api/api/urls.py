@@ -1,6 +1,12 @@
 from django.urls import path, include
 from rest_framework import routers
-from api.views import CommentViewSet, PostViewSet, GroupViewSet, UserViewSet
+from api.views import (
+    CommentViewSet,
+    FollowViewSet,
+    PostViewSet,
+    GroupViewSet,
+    UserViewSet,
+)
 
 API_VERSION = "v1"
 
@@ -11,6 +17,7 @@ router.register(
     r"^posts/(?P<post_id>\d+)/comments", CommentViewSet, basename="comments"
 )
 router.register(r"^users", UserViewSet, basename="users")
+router.register(r"^follow", FollowViewSet, basename="follow")
 
 app_name = "api"
 
