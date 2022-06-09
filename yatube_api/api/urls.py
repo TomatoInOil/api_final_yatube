@@ -4,13 +4,19 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+API_VERSION = "v1"
+
 app_name = "api"
 
 urlpatterns = [
     path(
-        "api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
+        f"{API_VERSION}/token/",
+        TokenObtainPairView.as_view(),
+        name="token_obtain_pair",
     ),
     path(
-        "api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
+        f"{API_VERSION}/token/refresh/",
+        TokenRefreshView.as_view(),
+        name="token_refresh",
     ),
 ]
