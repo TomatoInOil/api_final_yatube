@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.pagination import LimitOffsetPagination
 
 from posts.models import Group, Post
 from api.permissions import OnlyAuthorsUpdateDelete
@@ -20,7 +20,8 @@ class PostViewSet(ModelViewSet):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticated, OnlyAuthorsUpdateDelete)
+    permission_classes = (OnlyAuthorsUpdateDelete,)
+    pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -37,7 +38,7 @@ class CommentViewSet(ModelViewSet):
     """CRUD для комментариев к постам."""
 
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthenticated, OnlyAuthorsUpdateDelete)
+    permission_classes = (OnlyAuthorsUpdateDelete,)
 
     def get_queryset(self):
         post_id = self.kwargs.get("post_id")
