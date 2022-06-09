@@ -5,6 +5,6 @@ API_VERSION = "v1"
 app_name = "api"
 
 urlpatterns = [
-    path(r"^auth/", include("djoser.urls")),
-    path(r"^auth/", include("djoser.urls.jwt")),
+    path(f"{API_VERSION}/", include("djoser.urls")),
+    path(f"{API_VERSION}/", include("djoser.urls.jwt")),
 ]
