@@ -1,24 +1,25 @@
 # API YATUBE
 ## Оглавление
-1. [Описание проекта](https://github.com/TomatoInOil/api_yatube#описание-проекта)
-2. [Как развернуть](https://github.com/TomatoInOil/api_yatube#как-развернуть)
-3. [Примеры запросов и ответов](https://github.com/TomatoInOil/api_yatube#примеры-запросов-и-ответов)
-    1. [Доступные эндпоинты](https://github.com/TomatoInOil/api_yatube#доступные-эндпоинты)
-    2. [Authorization](https://github.com/TomatoInOil/api_yatube#authorization)
-    3. [Работа с постами](https://github.com/TomatoInOil/api_yatube#работа-с-постами)
-    4. [Работа с группами](https://github.com/TomatoInOil/api_yatube#работа-с-группами)
-    5. [Работа с комментариями](https://github.com/TomatoInOil/api_yatube#работа-с-комментариями)
-    6. [Работа с пользователями](https://github.com/TomatoInOil/api_yatube#работа-с-пользователями)
-4. [Об авторе](https://github.com/TomatoInOil/api_yatube#об-авторе)
+1. [Описание проекта](https://github.com/TomatoInOil/api_final_yatube#описание-проекта)
+2. [Как развернуть](https://github.com/TomatoInOil/api_final_yatube#как-развернуть)
+3. [Примеры запросов и ответов](https://github.com/TomatoInOil/api_final_yatube#примеры-запросов-и-ответов)
+    1. [Доступные эндпоинты](https://github.com/TomatoInOil/api_final_yatube#доступные-эндпоинты)
+    2. [Authorization](https://github.com/TomatoInOil/api_final_yatube#authorization)
+    3. [Работа с постами](https://github.com/TomatoInOil/api_final_yatube#работа-с-постами)
+    4. [Работа с группами](https://github.com/TomatoInOil/api_final_yatube#работа-с-группами)
+    5. [Работа с комментариями](https://github.com/TomatoInOil/api_final_yatube#работа-с-комментариями)
+    6. [Работа с подписками](https://github.com/TomatoInOil/api_final_yatube#работа-с-подписками)
+    7. [Работа с пользователями](https://github.com/TomatoInOil/api_final_yatube#работа-с-пользователями)
+4. [Об авторе](https://github.com/TomatoInOil/api_final_yatube#об-авторе)
 ## Описание проекта
-API сервис для форума писателей "Yatube". Реализована возможность работы с постами, комментариями, группами и пользователями. Подробнее в разделе [примеров запросов и ответов](https://github.com/TomatoInOil/api_yatube#примеры-запросов-и-ответов). Аутентификация пользователей реализована с помощью `rest_framework.authtoken`.
+API сервис для форума писателей "Yatube". Реализована возможность работы с постами, комментариями, группами и пользователями. Подробнее в разделе [примеров запросов и ответов](https://github.com/TomatoInOil/api_final_yatube#примеры-запросов-и-ответов). Аутентификация пользователей реализована с помощью `rest_framework.authtoken`.
 ## Как запустить
 Клонировать репозиторий и перейти в него в командной строке:
 ```
-git clone https://github.com/TomatoInOil/api_yatube.git
+git clone https://github.com/TomatoInOil/api_final_yatube.git
 ```
 ```
-cd api_yatube
+cd api_final_yatube
 ```
 Cоздать и активировать виртуальное окружение:
 ```
@@ -51,17 +52,20 @@ python3 manage.py runserver
 ### Доступные эндпоинты
 | Путь | Методы | Описание|
 |------|:------:|---------|
-|`.../api/v1/api-token-auth/`| POST | Передаём логин и пароль, получаем токен.|
+|`.../api/v1/jwt/create/`| POST | Передаём логин и пароль, получаем токены.|
+|`.../api/v1/jwt/refresh/`| POST | Передаём refresh токен и получаем новый access токен.|
+|`.../api/v1/jwt/verify/`| POST | Передаём access токен, в случае успеха получаем код 200.|
 |`.../api/v1/posts/`| GET, POST | Получаем список всех постов или создаём новый пост.|
 |`.../api/v1/posts/{pk}/`| GET, PUT, PATCH, DELETE | Получаем, редактируем или удаляем пост по id.|
-|`.../api/v1/groups/`| GET | Получаем список всех групп.|
-|`.../api/v1/groups/{pk}/`| GET | Получаем информацию о группе по id.|
+|`.../api/v1/groups/`| GET | Получаем список всех сообществ.|
+|`.../api/v1/groups/{pk}/`| GET | Получаем информацию о сообществе по id.|
 |`.../api/v1/posts/{post_id}/comments/`| GET, POST | Получаем список всех комментариев поста с id=post_id или создаём новый, указав id поста, который хотим прокомментировать.|
 |`.../api/v1/posts/{post_id}/comments/{comment_id}/`| GET, PUT, PATCH, DELETE | Получаем, редактируем или удаляем комментарий по id у поста с id=post_id.|
+|`.../api/v1/follow/`| GET, POST | Получаем список всех подписок или подписываемся на автора, передав в following его никнейм. |
 |`.../api/v1/users/`| GET | Получаем список всех пользователей. |
 |`.../api/v1/users/{pk}/`| GET | Получаем по id информацию о пользователе: никнейм, имя и фамилию, список id постов. |
 ### Authorization
-Пример запроса токена  
+Пример запроса токенов
 ***POST .../api/v1/api-token-auth/***
 ```JSON
 {
@@ -72,7 +76,8 @@ python3 manage.py runserver
 Пример ответа
 ```JSON
 {
-    "token": "d6f369066d191e9ca37323267ec2a10b5ff866db"
+    "refresh": "string",
+    "access": "string"
 }
 ```
 ### Работа с постами
@@ -81,7 +86,7 @@ python3 manage.py runserver
 ```JSON
 {
     "text": "Я Иван Иванов! Меня знают все!",
-    "group": "ivanovo-slug"
+    "group": 1
 }
 ```
 Пример ответа
@@ -92,7 +97,7 @@ python3 manage.py runserver
     "pub_date": "2022-06-07T13:57:32.807900Z",
     "author": "ivan",
     "image": null,
-    "group": "ivanovo-slug"
+    "group": 1
 }
 ```
 Пример запроса редактирования поста Ивана. Редактировать посты могут только их авторы.  
@@ -110,7 +115,7 @@ python3 manage.py runserver
     "pub_date": "2022-06-07T13:57:32.807900Z",
     "author": "ivan",
     "image": null,
-    "group": "ivanovo-slug"
+    "group": 1
 }
 ```
 ### Работа с группами
@@ -171,6 +176,33 @@ python3 manage.py runserver
 ```Python
 Status: 204 No Content
 # в теле ответа ничего не возвращается
+```
+### Работа с подписками
+Пример запроса получения списка своих подписок (требует авторизации). Возможен поиск по подпискам по параметру search.  
+***GET .../api/v1/follow/***  
+В теле запроса ничего передавать не требуется.  
+Пример ответа.
+```JSON
+[
+  {
+    "user": "string",
+    "following": "string"
+  }
+]
+```
+Пример запроса на подписку (требует авторизации).
+***POST .../api/v1/follow/***  
+```JSON
+{
+  "following": "username"
+}
+```
+Пример ответа.
+```JSON
+{
+  "user": "username",
+  "following": "username"
+}
 ```
 ### Работа с пользователями
 Пример запроса пользователя с id=3.  
