@@ -66,7 +66,7 @@ python3 manage.py runserver
 |`.../api/v1/users/{pk}/`| GET | Получаем по id информацию о пользователе: никнейм, имя и фамилию, список id постов. |
 ### Authorization
 Пример запроса токенов
-***POST .../api/v1/api-token-auth/***
+***POST .../api/v1/jwt/create/***
 ```JSON
 {
     "username": "ivan",
