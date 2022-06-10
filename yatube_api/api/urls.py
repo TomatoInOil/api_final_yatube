@@ -1,10 +1,11 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework import routers
+
 from api.views import (
     CommentViewSet,
     FollowViewSet,
-    PostViewSet,
     GroupViewSet,
+    PostViewSet,
     UserViewSet,
 )
 

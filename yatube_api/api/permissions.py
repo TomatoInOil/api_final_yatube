@@ -5,7 +5,7 @@ class OnlyAuthorsUpdateDelete(permissions.BasePermission):
     """Разрешения, позволяющие редактировать, удалять объект только авторам.
     Чтение разрешено всем пользователям."""
 
-    message = "Только авторы могут редактировать и удалять посты."
+    message = "Только авторы могут редактировать и удалять."
 
     def has_object_permission(self, request, view, obj):
         return (

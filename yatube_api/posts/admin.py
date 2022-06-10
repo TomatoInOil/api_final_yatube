@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from posts.models import Group, Post, Comment, Follow
+from posts.models import Comment, Follow, Group, Post
 
 
 @admin.register(Post)
@@ -33,7 +33,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
-    """Настройка административной панели для управления подписками."""
+    """Управление подписками."""
 
     list_display = ("pk", "user", "following")
     search_fields = (
@@ -44,7 +44,7 @@ class FollowAdmin(admin.ModelAdmin):
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
-    """Настройка административной панели для управления сообществами."""
+    """Управление группами."""
 
     list_display = ("pk", "title", "slug", "description")
     search_fields = ("title__startswith", "slug__startswith")
