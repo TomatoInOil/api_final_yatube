@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from posts.models import Comment, Follow, Group, Post
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+from posts.models import Comment, Follow, Group, Post
 from api.validators import FieldsAreNotEqual
 
 User = get_user_model()

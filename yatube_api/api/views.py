@@ -1,16 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import (
-    GenericViewSet,
-    ModelViewSet,
-    ReadOnlyModelViewSet,
-)
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from posts.models import Group, Post
+from api.mixins import CreateListViewSet
 from api.permissions import OnlyAuthorsUpdateDelete
 from api.serializer import (
     CommentSerializer,
@@ -21,14 +17,6 @@ from api.serializer import (
 )
 
 User = get_user_model()
-
-
-class CreateListViewSet(
-    mixins.CreateModelMixin, mixins.ListModelMixin, GenericViewSet
-):
-    """ViewSet, который позволяет создать объект и получить список объектов."""
-
-    pass
 
 
 class PostViewSet(ModelViewSet):
